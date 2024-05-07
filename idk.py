@@ -10,7 +10,8 @@ with open('roles.txt', 'r') as f:
         b.append(f.readline().strip())
         i = i+1
 
-print(b)
+#вводим кол-во игроков, на основе этого вычленяем нужную часть ролей из roles.txt, получившийся список ролей шаффлим
+
 random.shuffle(b)
 a = []
 c = {}
@@ -22,7 +23,7 @@ while i < n:
     print('роль:', b[i])
     c[str(d)] = str(b[i])
     i = i + 1
-print(c)
+# игроки вводят свое имя, сразу же назначается роль из зашаффленного списка
 
 if n >= 7:
     player1 = None
@@ -60,7 +61,7 @@ if n >= 7:
                             if n ==14:
                                 player14 = None
                                 player14 = what_role(a, 13, player14, c)
-print(player1.name)
 
+#это цикл для создания переменных (игрок+роль+класс)
 
 
