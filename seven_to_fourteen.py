@@ -1,6 +1,6 @@
 from roles_shells import *
 
-
+#это нужно для того, чтобы определить, какой класс нужно назначить созданной переменной для игрока
 def what_role(people, i, person, some_roles):
     print(some_roles[people[i]])
     if some_roles[people[i]] == 'Oprich':
