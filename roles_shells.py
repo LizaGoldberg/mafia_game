@@ -4,6 +4,7 @@ class Player(object):
     status = 'alive'
     blocked = False
     healed = False
+    immun = False
     def __init__(self, name):
         self.name = name
     def role_name(self, role):
@@ -58,7 +59,11 @@ class Dyak(Player):
     pass
 
 class Boyar(Player):
-    pass
+    def role_name(self, role):
+        Player.role = 'Boyar'
+        print('boyar')
+    def inherit(self, Player):
+        Player.immun = True    
 
 
 
