@@ -36,7 +36,23 @@ class Rules(QDialog):
                        'если все опричники казнены\n', self)
         self.label.setStyleSheet("color: white")
         self.label.adjustSize()
-        
+
+class History(QDialog):
+    def __init__(self, root, **kwargs):
+        super().__init__(root, **kwargs)
+        self.main = root
+        self.label = QLabel(
+            ("Тоя же зимы, декабря в 3 день, в неделю, царь и великий князь Иван Васильевичь\nвсеа Русии с своею царицею и "
+         "великою княгинею Марьею и с своими детми поехал\nс Москвы в село в Коломенское. Подъем же его не таков был, "
+         "якоже преже того\nезживал по манастырем молитися, или на которые свои потехи в объезды\nездил: взял же с "
+         "собою святость, иконы и кресты, златом и камением драгам украшенные,\nи суды золотые и серебряные, "
+         "и поставцы все всяких судов, золотое и серебряное,\nи платие и денги и всю свою казну повеле взята с собою. "
+         "Которым же бояром и дворяном\nближним и приказным людем повеле с собою ехати, и тем многим повеле с собою "
+         "ехати з женами и з детми,\nа дворяном и детем боярским выбором изо всех городов, которых прибрал государь "
+         "быта с ним,\nвелел тем всем ехати с собою с людми и с коими, со всем служебным нарядом\n"), self)
+        self.label.setStyleSheet("color: white")
+        self.label.adjustSize()
+
 
 
 class MainWindow(QMainWindow):
@@ -45,6 +61,7 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
         self.dialog_rules = Rules(self)
+        self.history = History(self)
 
         # set_widgets
         QFontDatabase.addApplicationFont("TDCyrillic.otf")
@@ -71,23 +88,19 @@ class MainWindow(QMainWindow):
         self.rules.move(10, 10)
         self.rules.clicked.connect(self.dialog_rules.open)
 
-        spravka = QPushButton("справка", self)
-        spravka.setFixedSize(QSize(90, 44))
-        spravka.setStyleSheet("background-color: white; border-radius: 18px; font: 40px")
-        spravka.setFont(QFont("TD Cyrillic"))
-        spravka.move(10, 70)
+        self.spravka = QPushButton("справка", self)
+        self.spravka.setFixedSize(QSize(90, 44))
+        self.spravka.setStyleSheet("background-color: white; border-radius: 18px; font: 40px")
+        self.spravka.setFont(QFont("TD Cyrillic"))
+        self.spravka.move(10, 70)
+        self.spravka.clicked.connect(self.history.open)
 
         self.setFixedSize(QSize(705, 472))
         self.setStyleSheet("background-color: black")
 
     def begin_was_clicked(self):
         self.begin.setStyleSheet("background-color: black; color: white; border-radius: 18px; font: 60px")
-        #запускаем приветствия
-
-
-
-
-
+        #запускаем экран введения сколько ролей
 
 
 app = QApplication(sys.argv)
