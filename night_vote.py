@@ -1,6 +1,6 @@
 import sys
-from idk import *
-from seven_to_fourteen import *
+
+from mafia.globall import blya, get_all_vars, get_number_players
 from roles_shells import *
 from PyQt6.QtCore import QSize, Qt, QPoint
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit, QLabel, QPushButton, QGridLayout, QWidget, QDialog
@@ -10,7 +10,6 @@ from PyQt6.QtGui import QFont, QFontDatabase
 class Peasant_night(QDialog):
     def __init__(self, root, **kwargs):
         super().__init__(root, **kwargs)
-
 
         self.main = root
 
@@ -35,14 +34,14 @@ class NameButton(QPushButton):
 
         QFontDatabase.addApplicationFont("TDCyrillic.otf")
 
-        for i in range(len(blya.all_vars)):
-            for k in blya.all_vars:
+        for i in range(len(get_all_vars())):
+            for k in get_all_vars():
                 if k.name == self.name_clicked:
                     self.role_clicked = k.role
 
         self.setText(a)
         self.setFixedSize(QSize(60, 60))
-        self.setStyleSheet("background-color: white; border-radius: 8px; font: 20px")
+        self.setStyleSheet("background-color: white; border-radius: 8px; font: 40px")
         self.setFont(QFont("TD Cyrillic"))
         self.move(370, 280)
         self.clicked.connect(self.on_changed)
@@ -77,7 +76,7 @@ class NameButtonIndividual(QPushButton):
             self.clicked.connect(self.on_changed)
         self.setText(a)
         self.setFixedSize(QSize(60, 60))
-        self.setStyleSheet("background-color: white; border-radius: 8px; font: 20px")
+        self.setStyleSheet("background-color: white; border-radius: 8px; font: 40px")
         self.setFont(QFont("TD Cyrillic"))
         self.move(370, 280)
 
@@ -87,22 +86,22 @@ class NameButtonIndividual(QPushButton):
 
     def cliiiick(self):
         if self.ability == True:
-            for i in range(len(blya.all_vars)):
-                for k in blya.all_vars:
+            for i in range(len(get_all_vars())):
+                for k in get_all_vars():
                     if k.name == self.name_victim:
-                        if blya.all_vars[i].name == blya.name_clicked:
-                            if blya.all_vars[i].role == 'Healer':
-                                blya.all_vars[i].to_heal(k)
-                            if blya.all_vars[i].role == 'Priest':
-                                blya.all_vars[i].active_or_not(k)
-                            if blya.all_vars[i].role == 'Dyak':
-                                blya.all_vars[i].find_what_role(k)
-                            if blya.all_vars[i].role == 'GirlX':
-                                blya.all_vars[i].to_block(k)
-                            if blya.all_vars[i].role == 'Boyar':
-                                blya.all_vars[i].inherit(k)
-                            if blya.all_vars[i].role == 'Oprich':
-                                blya.all_vars[i].to_kill(k)
+                        if get_all_vars()[i].name == blya.name_clicked:
+                            if get_all_vars()[i].role == 'Healer':
+                                get_all_vars()[i].to_heal(k)
+                            if get_all_vars()[i].role == 'Priest':
+                                get_all_vars()[i].active_or_not(k)
+                            if get_all_vars()[i].role == 'Dyak':
+                                get_all_vars()[i].find_what_role(k)
+                            if get_all_vars()[i].role == 'GirlX':
+                                get_all_vars()[i].to_block(k)
+                            if get_all_vars()[i].role == 'Boyar':
+                                get_all_vars()[i].inherit(k)
+                            if get_all_vars()[i].role == 'Oprich':
+                                get_all_vars()[i].to_kill(k)
 
         NameButtonIndividual.ability = False
 
@@ -120,13 +119,19 @@ class NightTable(QMainWindow):  # template for "How many?"
         x = 0
         y = 0
         z = 0
-        for i in range(len(blya.all_vars)):
-            for k in blya.all_vars:
-                if blya.all_vars[i].name == k.name and k.status != 'dead':
-                    layout.addWidget(NameButton(blya.all_vars[i].name), x, y)
-                    z += 1
+        for i in range(len(get_all_vars())):
+            for k in get_all_vars():
+                print(get_all_vars())
+                print(get_all_vars()[i].name)
+                try:
+                    if get_all_vars()[i].name == k.name and k.status != 'dead':
+                        layout.addWidget(NameButton(get_all_vars()[i].name), x, y)
+                        z += 1
+                except Exception as error:
+                    print(error)
+                    print("pizdec")
 
-            if x < int(blya.nn ** 0.5):
+            if x < int(get_number_players() ** 0.5):
                 x += 1
             else:
                 y += 1
@@ -152,11 +157,11 @@ class IndividualTable(QMainWindow):
         layout = QGridLayout()
         x = 0
         y = 0
-        for i in range(len(blya.all_vars)):
-            for k in blya.all_vars:
-                if blya.all_vars[i].name == k.name and k.status != 'dead' and blya.all_vars[i].name != blya.name_clicked:
-                    layout.addWidget(NameButtonIndividual(blya.all_vars[i].name), x, y)
-            if x < int(blya.nn ** 0.5):
+        for i in range(len(get_all_vars())):
+            for k in get_all_vars():
+                if get_all_vars()[i].name == k.name and k.status != 'dead' and get_all_vars()[i].name != blya.name_clicked:
+                    layout.addWidget(NameButtonIndividual(get_all_vars()[i].name), x, y)
+            if x < int(get_number_players() ** 0.5):
                 x += 1
             else:
                 y += 1
@@ -167,11 +172,3 @@ class IndividualTable(QMainWindow):
         self.setCentralWidget(widget)
         self.setFixedSize(QSize(705, 472))
         self.setStyleSheet("background-color: black")
-
-
-app = QApplication(sys.argv)
-
-window = NightTable()
-window.show()
-
-app.exec()
