@@ -180,6 +180,8 @@ class blya():
         self.nn = get_number_players()
         self.aa = get_roles_players()
         self.all_vars = get_all_vars()
+        self.name_clicked = None
+        self.max_alive = None
 
 
 def get_number_players():
