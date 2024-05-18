@@ -8,6 +8,8 @@ class Howmany(QMainWindow): #template for "How many?"
     def __init__(self):
         super().__init__()
 
+        self.players_number = 0 # число игроков
+
         # set_widgets
         QFontDatabase.addApplicationFont("TDCyrillic.otf")
         QFontDatabase.addApplicationFont("TDRukopis.otf")
@@ -36,14 +38,5 @@ class Howmany(QMainWindow): #template for "How many?"
 
     def on_changed(self):
         self.submit.setStyleSheet("background-color: black; color: white; border-radius: 8px; font: 50px")
-        #запускаем окно "как тебя зовут"
-        return (self.enter.text()) #возвращает число игроков
+        self.players_number = int(self.enter.text())
 
-
-
-app = QApplication(sys.argv)
-
-window = Howmany()
-window.show()
-
-app.exec()
