@@ -1,10 +1,12 @@
 from mafia.seven_to_fourteen import what_role
 
+
 class blya():
-    def method(self):
-        self.nn = get_number_players()
-        self.aa = get_roles_players()
-        self.all_vars = get_all_vars()
+    name_clicked = None
+    max_alive = None
+
+    def __init__(self):
+        super().__init__()
         self.name_clicked = None
         self.max_alive = None
 
@@ -34,11 +36,20 @@ def set_roles_players(m):
     roles_players = m
 
 
-def get_all_vars():
+def set_number_players(n):
+    global number_players
+    number_players = n
+
+
+def set_all_vars():
     global all_vars
     n = get_number_players()
-    a = get_roles_players()
+    #print("hi")
+    #print(n)
+    a = get_names_players()
+    #print(a)
     c = create_dict()
+    #print(c)
     if n >= 7:
         player1 = None
         player1 = what_role(a, 0, player1, c)
@@ -50,6 +61,7 @@ def get_all_vars():
         player3 = what_role(a, 2, player3, c)
         all_vars.append(player3)
         player4 = None
+        player4 = what_role(a, 3, player4, c)
         all_vars.append(player4)
         player5 = None
         player5 = what_role(a, 4, player5, c)
@@ -81,12 +93,23 @@ def get_all_vars():
                             player12 = what_role(a, 11, player12, c)
                             all_vars.append(player12)
 
+def get_all_vars():
+    global all_vars
+    return all_vars
+
+
+
 def create_dict():
     c = {}
-    for i in get_names_players():
-        for j in get_roles_players():
-            c[str(i)] = str(j)
+    for i in range(len(get_names_players())):
+        name = get_names_players()
+        role = get_roles_players()
+        #print("create dict")
+        #print(name[i])
+        #print(role[i])
+        c[str(name[i])] = str(role[i])
     return c
+
 
 roles_players = []
 names_players = []
