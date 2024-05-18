@@ -7,10 +7,11 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit, QLabel, QPushB
 from PyQt6.QtGui import QFont, QFontDatabase, QPixmap
 
 
-from mafia import globall
+from mafia import globall, night_vote
 from mafia import how_many
-from mafia.globall import get_roles_players, get_names_players, set_roles_players, append_names_players
-
+from mafia.globall import get_roles_players, get_names_players, set_roles_players, append_names_players, blya, \
+    set_all_vars, get_all_vars, set_number_players
+from mafia.night_vote import NightTable
 
 
 class Whatname(QMainWindow):  # template for "What's your name?"
@@ -153,9 +154,9 @@ class MainWindow(QMainWindow):
         self.whatname = Whatname()
         if len(get_roles_players()) == 0:
             set_roles_players(decide_roles(self.howmany.players_number))
-        global number_players
-        number_players = self.howmany.players_number
-        print(get_roles_players())  # !!
+            set_number_players(self.howmany.players_number)
+        #print(get_roles_players())  # !!
+        #print(get_all_vars())
         self.whatname.submit.clicked.connect(self.show_yourrole)
         self.whatname.submit.clicked.connect(self.whatname.close)
         self.whatname.show()
@@ -166,14 +167,26 @@ class MainWindow(QMainWindow):
         if len(get_names_players()) < self.howmany.players_number:
             self.yourrole.submit.clicked.connect(self.show_whatname)
             self.yourrole.submit.clicked.connect(self.yourrole.close)
-        else:
+            self.yourrole.show()
+        elif len(get_names_players()) == self.howmany.players_number:
             self.yourrole.submit.clicked.connect(self.show_night_vote)
             self.yourrole.submit.clicked.connect(self.yourrole.close)
-        self.yourrole.show()
+            set_all_vars()
+            print("YESSSS")
+            print(get_all_vars()[0])
+            print(get_all_vars()[0].name)
+            try:
+                self.yourrole.show()
+            except Exception as error:
+                print(error)
 
-    #def show_night_vote(self):
-        #self.nightvote = night_vote.NightTable()
-        #self.nightvote.show()
+    def show_night_vote(self):
+        try:
+            self.nighttable = NightTable()
+            self.nighttable.show()
+        except Exception as error:
+            print(error)
+
 
 
 
@@ -190,10 +203,6 @@ def decide_roles(n):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    roles_players = []
-    names_players = []
-    all_vars = []
-    number_players = 0
     w = MainWindow()
     w.show()
     w.show_menu()
