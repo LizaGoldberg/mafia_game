@@ -2,13 +2,11 @@ import sys
 import random
 
 import menu
-from PyQt6.QtCore import QSize, Qt, QPoint
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit, QLabel, QPushButton, QGridLayout, QWidget, QDialog, \
-    QVBoxLayout
+from PyQt6.QtCore import QSize, Qt
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit, QLabel, QPushButton, QWidget, QVBoxLayout
 from PyQt6.QtGui import QFont, QFontDatabase, QPixmap
 
-from mafia import how_many
-from mafia.drafts import night_vote
+from mafia import how_many, night_vote
 from mafia.seven_to_fourteen import what_role
 
 
