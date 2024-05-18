@@ -8,7 +8,5 @@ Peasant
 Priest
 Oprich
 Peasant
-Tsar
-Maluta
 Peasant
 Peasant
